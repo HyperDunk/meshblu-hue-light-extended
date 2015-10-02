@@ -41,16 +41,55 @@ OPTIONS_SCHEMA =
       required: true,
       default: 'octoblu'
 
+ACTIONS_SCHEMA =
+  type: 'object'
+  actions:
+    on:
+      type: 'object'
+      name: 'On'
+      parameters:
+        color:
+          type: 'string',
+          required: false
+        transitiontime:
+          type: 'number',
+          required: false
+        alert:
+          type: 'string',
+          required: false
+        effect:
+          type: 'string',
+          required: false
+    off:
+      type: 'object'
+      name: 'Off'
+
+ACTIONS_DEFAULTS =
+  on:
+    on: true,
+    color: 'white',
+    transitiontime: '',
+    alert: '',
+    effect: ''
+  off:
+    on: false,
+    color: ''
+
 class Plugin extends EventEmitter
   constructor: ->
     debug 'starting plugin'
     @options = {}
     @messageSchema = MESSAGE_SCHEMA
     @optionsSchema = OPTIONS_SCHEMA
+    @actionsSchema = ACTIONS_SCHEMA
+    @actions = ACTIONS_DEFAULTS
 
   onMessage: (message) =>
     debug 'on message', message
-    payload = message.payload
+    if message.payload.action
+      payload = _.merge(@actions[message.payload.action], message.payload.parameters)
+    else
+      payload = message.payload
     @updateHue payload
 
   onConfig: (device={}) =>
@@ -86,4 +125,5 @@ class Plugin extends EventEmitter
 module.exports =
   messageSchema: MESSAGE_SCHEMA
   optionsSchema: OPTIONS_SCHEMA
+  actionsSchema: ACTIONS_SCHEMA
   Plugin: Plugin
