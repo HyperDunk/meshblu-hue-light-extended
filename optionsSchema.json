@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {    
+    "lightNumber": {
+      "type": "number",
+      "required": true
+    },
+    "useGroup": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "ipAddress": {
+      "type": "string",
+      "required": true
+    },
+    "apiUsername": {
+      "type": "string",
+      "required": true,
+      "default": "newdeveloper"
+    }
+  }
+}

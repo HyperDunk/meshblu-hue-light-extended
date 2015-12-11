@@ -48,7 +48,7 @@ class Connector extends EventEmitter
         token:         @config.token
         messageSchema: @plugin.messageSchema
         optionsSchema: @plugin.optionsSchema
-        actionsSchema: @plugin.actionsSchema
+        messageFormSchema: @plugin.messageFormSchema
         options:       @plugin.options
         initializing:  false
         currentVersion: packageJSON.version

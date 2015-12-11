@@ -1,0 +1,10 @@
+{
+  "on": {
+    "on": true,
+    "color": ""
+  },
+  "off": {
+    "on": false,
+    "color": ""
+  }
+}

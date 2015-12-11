@@ -1,0 +1,25 @@
+[
+  {
+    "key": "action"
+  },
+  {
+    "key": "on",
+    "condition": "model.action == 'custom'"
+  },
+  {
+    "key": "color",
+    "condition": "model.action == 'custom' || model.action == 'set-color'"
+  },
+  {
+    "key": "transitiontime",
+    "condition": "model.action == 'custom'"
+  },
+  {
+    "key": "alert",
+    "condition": "model.action == 'custom'"
+  },
+  {
+    "key": "effect",
+    "condition": "model.action == 'custom'"
+  }
+]

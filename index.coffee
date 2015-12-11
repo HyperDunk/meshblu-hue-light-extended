@@ -5,75 +5,15 @@ _              = require 'lodash'
 tinycolor      = require 'tinycolor2'
 HueUtil        = require 'hue-util'
 {EventEmitter} = require 'events'
-debug          = require('debug')('meshblu-hue')
+debug          = require('debug')('meshblu-hue-light-extended')
 
-MESSAGE_SCHEMA =
-  type: 'object'
-  properties:
-    on:
-      type: 'boolean',
-      required: true
-    color:
-      type: 'string',
-      required: true
-    transitiontime:
-      type: 'number'
-    alert:
-      type: 'string'
-    effect:
-      type: 'string'
+MESSAGE_SCHEMA = require './messageSchema.json'
 
-OPTIONS_SCHEMA =
-  type: 'object'
-  properties:
-    lightNumber:
-      type: 'number',
-      required: true
-    useGroup:
-      type: 'boolean',
-      required: true,
-      default: false
-    ipAddress:
-      type: 'string',
-      required: true
-    apiUsername:
-      type: 'string',
-      required: true,
-      default: 'octoblu'
+MESSAGE_FORM_SCHEMA = require './messageFormSchema.json'
 
-ACTIONS_SCHEMA =
-  type: 'object'
-  actions:
-    on:
-      type: 'object'
-      name: 'On'
-      parameters:
-        color:
-          type: 'string',
-          required: false
-        transitiontime:
-          type: 'number',
-          required: false
-        alert:
-          type: 'string',
-          required: false
-        effect:
-          type: 'string',
-          required: false
-    off:
-      type: 'object'
-      name: 'Off'
+OPTIONS_SCHEMA = require './optionsSchema.json'
 
-ACTIONS_DEFAULTS =
-  on:
-    on: true,
-    color: 'white',
-    transitiontime: '',
-    alert: '',
-    effect: ''
-  off:
-    on: false,
-    color: ''
+ACTIONS_DEFAULTS = require './actionsDefaults.json'
 
 class Plugin extends EventEmitter
   constructor: ->
@@ -81,15 +21,15 @@ class Plugin extends EventEmitter
     @options = {}
     @messageSchema = MESSAGE_SCHEMA
     @optionsSchema = OPTIONS_SCHEMA
-    @actionsSchema = ACTIONS_SCHEMA
+    @messageFormSchema = MESSAGE_FORM_SCHEMA
     @actions = ACTIONS_DEFAULTS
 
   onMessage: (message) =>
     debug 'on message', message
-    if message.payload.action
-      payload = _.merge(@actions[message.payload.action], message.payload.parameters)
-    else
-      payload = message.payload
+    switch message.payload.action
+      when 'custom' then payload = message.payload
+      when 'set-color' then payload = {on: true, color:message.payload.color}
+      else payload = @actions[message.payload.action]
     @updateHue payload
 
   onConfig: (device={}) =>
@@ -125,5 +65,5 @@ class Plugin extends EventEmitter
 module.exports =
   messageSchema: MESSAGE_SCHEMA
   optionsSchema: OPTIONS_SCHEMA
-  actionsSchema: ACTIONS_SCHEMA
+  messageFormSchema: MESSAGE_FORM_SCHEMA
   Plugin: Plugin

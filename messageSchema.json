@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "properties": {
+    "action": {
+      "title": "Action",
+      "type": "string",
+      "required": true,
+      "enum": [
+        "on",
+        "off",
+        "set-color",
+        "custom"
+      ],
+      "enumNames": {
+        "on": "On",
+        "off": "Off",
+        "set-color": "Set Color",
+        "custom": "Custom"
+      }
+    },
+    "on": {
+        "title": "On",
+        "type": "boolean",
+        "required": true
+    },
+    "color": {
+      "title": "Color",
+      "type": "string",
+      "required": true
+    },
+    "transitiontime": {
+      "title": "Transition Time",
+      "type": "number",
+      "required": false
+    },
+    "alert": {
+      "title": "Alert",
+      "type": "string",
+      "required": false
+    },
+    "effect": {
+      "title": "Effect",
+      "type": "string",
+      "required": false
+    }
+  }
+}
