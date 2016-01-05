@@ -15,6 +15,8 @@ OPTIONS_SCHEMA = require './optionsSchema.json'
 
 ACTIONS_DEFAULTS = require './actionsDefaults.json'
 
+ACTIONS_FORM = require './actionsForm.json'
+
 class Plugin extends EventEmitter
   constructor: ->
     debug 'starting plugin'
@@ -23,6 +25,7 @@ class Plugin extends EventEmitter
     @optionsSchema = OPTIONS_SCHEMA
     @messageFormSchema = MESSAGE_FORM_SCHEMA
     @actions = ACTIONS_DEFAULTS
+    @actionsForm = ACTIONS_FORM
 
   onMessage: (message) =>
     debug 'on message', message

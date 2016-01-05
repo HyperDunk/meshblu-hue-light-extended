@@ -1,0 +1,19 @@
+[
+  {
+    "type": "actions",
+    "items": [
+      {
+        "key": "on",
+        "title": "On",
+        "type": "button",
+        "onClick": "send_message({action:'on'})"
+      },
+      {
+        "key": "off",
+        "title": "Off",
+        "type": "button",
+        "onClick": "send_message({action:'off'})"
+      }
+    ]
+  }
+]
